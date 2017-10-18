@@ -1,0 +1,28 @@
+﻿<Application x:Class="记忆大师游戏.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:记忆大师游戏"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style  x:Key="ButtonHome" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="btnBackground" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="BurlyWood">
+                            <ContentControl x:Name="btnContent" Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentControl>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF97FF00" TargetName="btnBackground"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="BorderThickness" Value="1" TargetName="btnBackground"/>
+                                <Setter Property="BorderBrush" Value="Transparent" TargetName="btnBackground"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,42 @@
+﻿<Window x:Class="记忆大师游戏.View.WinWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:记忆大师游戏.View"
+        mc:Ignorable="d"
+        Title="胜利" Height="200" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style  x:Key="GameWinButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="btnBackground" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="#FFF5EF5F" Opacity="0.3">
+                            <ContentControl x:Name="btnContent" Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentControl>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF97FF00" TargetName="btnBackground"/>
+                                <Setter Property="Opacity" Value="1" TargetName="btnBackground"/>
+                                <Setter Property="Foreground" Value="Blue" TargetName="btnContent"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="BorderThickness" Value="1" TargetName="btnBackground"/>
+                                <Setter Property="BorderBrush" Value="Transparent" TargetName="btnBackground"/>
+                                <Setter Property="Opacity" Value="1" TargetName="btnBackground"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="image" Source="/Resources/Image/Win.jpg" Stretch="Fill"/>
+        <Button x:Name="btnNext" Content="下一关" HorizontalAlignment="Left" Height="30" Margin="162,121,0,0" VerticalAlignment="Top" Width="85" Style="{DynamicResource GameWinButtonStyle}" Click="btnNext_Click" FontFamily="Segoe UI Black" FontSize="16"/>
+        <Button x:Name="btnLevel" Content="关卡" HorizontalAlignment="Left" Height="30" Margin="46,121,0,0" VerticalAlignment="Top" Width="85" Style="{DynamicResource GameWinButtonStyle}" Click="btnLevel_Click" FontFamily="Segoe UI Black" FontSize="16"/>
+    </Grid>
+</Window>

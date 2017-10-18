@@ -1,0 +1,288 @@
+﻿<Page x:Class="记忆大师游戏.View.GameLevelPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:res="clr-namespace:记忆大师游戏.Properties"
+      xmlns:local="clr-namespace:记忆大师游戏.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="600"
+      Title="GameLevelPage">
+    <Page.Resources>
+        <LinearGradientBrush x:Key="background" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF009191" Offset="1"/>
+            <GradientStop Color="White"/>
+        </LinearGradientBrush>
+        <Style x:Key="TabControlStyle1" TargetType="{x:Type TabControl}">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0"
+                                    CornerRadius="7,7,0,0"
+                                    Background="{StaticResource background}">
+                                <TabPanel x:Name="HeaderPanel" 
+                                          IsItemsHost="true" 
+                                          Margin="2,2,2,0" 
+                                          KeyboardNavigation.TabIndex="1" 
+                                          Panel.ZIndex="1"/>
+                            </Border>
+                            <Border Grid.Row="1" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonNormalBackground" Color="Transparent"/>
+        <SolidColorBrush x:Key="TabItemHotBackground" Color="Transparent"/>
+        <SolidColorBrush x:Key="TabItemSelectedBackground" Color="Transparent"/>
+        <SolidColorBrush x:Key="TabItemHotBorderBrush" Color="Green"/>
+        <SolidColorBrush x:Key="TabItemDisabledBackground" Color="Transparent"/>
+        <SolidColorBrush x:Key="TabItemDisabledBorderBrush" Color="Transparent"/>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="6,1,6,1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+            <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid SnapsToDevicePixels="true" Margin="5">
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{TemplateBinding Background}" Padding="10,5,10,15">
+                                <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource TabItemHotBackground}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" TargetName="Bd">
+                                    <Setter.Value>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Image Source="/Resources/Image/TabItem.png"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="false"/>
+                                    <Condition Property="IsMouseOver" Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource TabItemHotBorderBrush}"/>
+                            </MultiTrigger>
+                            <Trigger Property="TabStripPlacement" Value="Bottom">
+                                <Setter Property="BorderThickness" TargetName="Bd" Value="1,0,1,1"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Left">
+                                <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,0,1"/>
+                            </Trigger>
+                            <Trigger Property="TabStripPlacement" Value="Right">
+                                <Setter Property="BorderThickness" TargetName="Bd" Value="0,1,1,1"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true"/>
+                                    <Condition Property="TabStripPlacement" Value="Top"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Margin" Value="-2,-2,-2,-1"/>
+                                <Setter Property="Margin" TargetName="Content" Value="0,0,0,1"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true"/>
+                                    <Condition Property="TabStripPlacement" Value="Bottom"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Margin" Value="-2,-1,-2,-2"/>
+                                <Setter Property="Margin" TargetName="Content" Value="0,1,0,0"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true"/>
+                                    <Condition Property="TabStripPlacement" Value="Left"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Margin" Value="-2,-2,-1,-2"/>
+                                <Setter Property="Margin" TargetName="Content" Value="0,0,1,0"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true"/>
+                                    <Condition Property="TabStripPlacement" Value="Right"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Margin" Value="-1,-2,-2,-2"/>
+                                <Setter Property="Margin" TargetName="Content" Value="1,0,0,0"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource TabItemDisabledBackground}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource TabItemDisabledBorderBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style  x:Key="ButtonStatusStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="btnBackground" Background="BurlyWood" Width="90" Height="100">
+                            <ContentControl x:Name="btnContent" Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentControl>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF97FF00" TargetName="btnBackground"/>
+                                <Setter Property="Foreground" Value="Green" TargetName="btnContent"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF97FF00" TargetName="btnBackground"/>
+                                <Setter Property="BorderThickness" Value="3" TargetName="btnBackground"/>
+                                <Setter Property="BorderBrush" Value="Transparent" TargetName="btnBackground"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid>
+        <TabControl x:Name="tabGameType" HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="600" Style="{DynamicResource TabControlStyle1}">
+            <TabControl.Background>
+                <ImageBrush ImageSource="/Resources/Image/LevelBackground.jpg"></ImageBrush>
+            </TabControl.Background>
+            <TabItem Header="黑白两清" FontSize="14" MouseEnter="TabItem_MouseEnter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="88*"/>
+                        <RowDefinition Height="133*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Button Tag="1" Style="{DynamicResource ButtonStatusStyle}" Margin="130,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/One.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="2" Style="{DynamicResource ButtonStatusStyle}" Margin="30,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Two.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="3" Style="{DynamicResource ButtonStatusStyle}" Margin="30,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Three.png"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Button Tag="4" Style="{DynamicResource ButtonStatusStyle}" Margin="130,-120,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Four.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="5" Style="{DynamicResource ButtonStatusStyle}" Margin="30,-120,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Five.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="6" Style="{DynamicResource ButtonStatusStyle}" Margin="30,-120,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Six.png"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="数字连连" FontSize="14" MouseEnter="TabItem_MouseEnter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="88*"/>
+                        <RowDefinition Height="133*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Button Tag="1" Style="{DynamicResource ButtonStatusStyle}" Margin="130,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/One.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="2" Style="{DynamicResource ButtonStatusStyle}" Margin="30,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Two.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="3" Style="{DynamicResource ButtonStatusStyle}" Margin="30,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Three.png"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Button Tag="4" Style="{DynamicResource ButtonStatusStyle}" Margin="130,-120,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Four.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="5" Style="{DynamicResource ButtonStatusStyle}" Margin="30,-120,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Five.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="6" Style="{DynamicResource ButtonStatusStyle}" Margin="30,-120,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Six.png"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="成双成对" FontSize="14" MouseEnter="TabItem_MouseEnter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="88*"/>
+                        <RowDefinition Height="133*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Button Tag="1" Style="{DynamicResource ButtonStatusStyle}" Margin="130,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/One.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="2" Style="{DynamicResource ButtonStatusStyle}" Margin="30,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Two.png"/>
+                            </Button.Content>
+                        </Button>
+                        <Button Tag="3" Style="{DynamicResource ButtonStatusStyle}" Margin="30,50,0,0" Click="Level_Click">
+                            <Button.Content>
+                                <Image Source="/Resources/Image/Three.png"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="btnHome" Width="35" Height="40" Margin="524,400,6,8" Grid.Row="1" Style="{DynamicResource ButtonHome}" Click="btnHome_Click" MouseEnter="btnHome_MouseEnter" Content="首页" FontFamily="Segoe UI Black" FontSize="14"/>
+    </Grid>
+</Page>
